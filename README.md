@@ -1,2 +1,2 @@
-# sanic_graphql_naive
+# sanic_graphql
 Simple Sanic + GraphQL server with graphene
