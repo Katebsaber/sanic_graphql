@@ -1,23 +1,19 @@
 from sanic_graphql import GraphQLView
 from sanic import Sanic
-import graphene
+from graphql.execution.executors.asyncio import AsyncioExecutor
+
+from schema import binance_1m_schema
 
 app = Sanic(name="Sanic Graphql App")
 
 
-class Query(graphene.ObjectType):
-    hello = graphene.String(description='A typical hello world')
+@app.listener('before_server_start')
+def init_graphql(app, loop):
+    app.add_route(
+        GraphQLView.as_view(schema=binance_1m_schema, batch=True, graphiql=True),
+        '/candles',
+    )
 
-    def resolve_hello(self, info):
-        return 'World'
-
-
-schema = graphene.Schema(query=Query)
-
-app.add_route(
-    GraphQLView.as_view(schema=schema, batch=True),
-    '/name'
-)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
