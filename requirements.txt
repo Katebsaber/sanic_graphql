@@ -1,2 +1,5 @@
 sanic-graphql
 graphene>=2.0
+graphene-sqlalchemy>=2.0
+graphql-server-core==1.1.1
+graphql-core<3,>=2.2
